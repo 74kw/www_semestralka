@@ -1,4 +1,60 @@
-<?php ?>
+
 <div>
-    <p>registrace</p>
+    <form method="post" action="">
+        <div class="register_form">
+            <h1>Registrace nového uživatele</h1>
+            <p>Vyplňte registrační formulář.</p>
+            <hr>
+
+            <label for="email"><b>Email</b></label>
+            <input type="email" placeholder="Zadej email" name="email" id="email" required>
+
+            <label for="psw"><b>Heslo</b></label>
+            <input type="password" placeholder="Zadej heslo" name="psw" id="psw" required>
+
+            <label for="psw_repeat"><b>Heslo (pro kontrolu)</b></label>
+            <input type="password" placeholder="Zadej znovu heslo" name="psw_repeat" id="psw_repeat" required>
+
+            <label for="name"><b>Jméno</b></label>
+            <input type="text" placeholder="Zadej jméno" name="name" id="name">
+
+            <label for="last_name"><b>Příjmení</b></label>
+            <input type="text" placeholder="Zadej příjmení" name="last_name" id="last_name">
+            <hr>
+            <button name="submit" type="submit" id="register_btn">Zaregistrovat</button>
+        </div>
+
+        <div class="TODO">
+            <p>Už máš účet ? <a href="/prihlaseni">Přihlášení</a></p>
+        </div>
+    </form>
 </div>
+<?php
+//include("config/config.php");
+//include_once("config/config.php");
+
+
+
+// REGISTER USER
+if (isset($_POST['submit'])) {
+    echo("postPred");
+    // receive all input values from the form
+    $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
+    $pass1 = !empty($_POST['psw']) ? trim($_POST['psw']) : null;
+    $pass2 = !empty($_POST['psw_repeat']) ? trim($_POST['psw_repeat']) : null;
+    $name = !empty($_POST['name']) ? trim($_POST['name']) : null;
+    $last_name = !empty($_POST['last_name']) ? trim($_POST['last_name']) : null;
+
+    $var = $db->UserExist($email);
+    var_dump($var);
+    if ($pass1 != $pass2){
+        echo("hesla se neshodují");
+    }else{
+        
+        echo($email . $pass1 . $pass2 . $name . $last_name);
+        echo("postPo");
+    }
+
+
+}
+?>

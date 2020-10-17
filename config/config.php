@@ -6,6 +6,9 @@ define('DB_USER','root');
 define('DB_PASSWORD','');
 define('DB_NAME','semestralka');
 
+ob_start();
+session_start();
+
 include_once ("db.php");
 
 $db = new DB();
