@@ -30,10 +30,9 @@
     </form>
 </div>
 <?php
-//include("config/config.php");
-//include_once("config/config.php");
-
-
+/**
+ * @var DB $db
+ */
 
 // REGISTER USER
 if (isset($_POST['submit'])) {
@@ -44,15 +43,18 @@ if (isset($_POST['submit'])) {
     $pass2 = !empty($_POST['psw_repeat']) ? trim($_POST['psw_repeat']) : null;
     $name = !empty($_POST['name']) ? trim($_POST['name']) : null;
     $last_name = !empty($_POST['last_name']) ? trim($_POST['last_name']) : null;
-
-    $var = $db->UserExist($email);
-    var_dump($var);
+    //var_dump($db->userExist($email)); //test
     if ($pass1 != $pass2){
         echo("hesla se neshodují");
     }else{
-        
-        echo($email . $pass1 . $pass2 . $name . $last_name);
-        echo("postPo");
+        if ($db->userExist($email)){
+            echo("Uzivatel jiz existuje");
+        }else{
+            //echo($email . $pass1 . $pass2 . $name . $last_name);
+            $db->insertUser($email,$pass1,$name,$last_name);
+            echo("postPo");
+        }
+
     }
 
 

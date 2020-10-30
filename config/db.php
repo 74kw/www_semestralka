@@ -20,5 +20,10 @@ private $conn;
             return false;
         }
     }
+    public function insertUser($email, $pswd,$name,$lastName){
+        $sql = "INSERT INTO users (email, password, privileges, name,lastName) VALUES (?,?,?,?,?)";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute([$email, $pswd, 'registrovany',$name,$lastName]);
+    }
 
 }
