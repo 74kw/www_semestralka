@@ -10,5 +10,7 @@ ob_start();
 session_start();
 
 include_once ("db.php");
+include_once ("user.php");
 
 $db = new DB();
+$user = new USER();

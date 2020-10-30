@@ -8,8 +8,19 @@
         <a href="/"> Úvod</a>
         <a href="/clanky"> Články</a>
         <a href="/kontakt"> Kontakt</a>
-        <a href="/prihlaseni"> Přihlášení</a>
-        <a href="/registrace"> Registrace</a>
-        <a href="/administrace"> Administrace</a>
+        <?php
+        if(!$user->isLogged())
+        {
+            echo '<a href="/prihlaseni"> Přihlášení</a>';
+            echo '<a href="/registrace"> Registrace</a>';
+        }
+        else
+        {
+            if (!$user->isLoggedRegistrovany()){
+                echo '<a href="/administrace"> Administrace</a>';
+            }
+            echo '<a href="/odhlaseni"> Odhlašení ze systému</a>';
+        }
+        ?>
     </nav>
 </header>

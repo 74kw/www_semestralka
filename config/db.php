@@ -25,5 +25,12 @@ private $conn;
         $stmt= $this->conn->prepare($sql);
         $stmt->execute([$email, $pswd, 'registrovany',$name,$lastName]);
     }
+    public function getUser($email){
+        $sql = "SELECT email, password,privileges, name,lastName FROM users WHERE email=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$email]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        return $result = $stmt->fetch();
+    }
 
 }

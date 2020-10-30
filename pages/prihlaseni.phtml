@@ -1,6 +1,5 @@
-<?php ?>
 <div>
-    <form action="XXX.php">
+    <form method="post" action="">
         <div class="TODO">
             <h1>Přihlášení do systému</h1>
             <p>Prosím vyplňte své údaje.</p>
@@ -14,7 +13,7 @@
             <hr>
 
 
-            <button type="submit" class="login_btn">Přihlásit</button>
+            <button name="submit" type="submit" class="login_btn">Přihlásit</button>
         </div>
 
         <div class="TODO">
@@ -22,3 +21,29 @@
         </div>
     </form>
 </div>
+<?php
+/**
+ * @var DB $db
+ */
+
+// login
+if (isset($_POST['submit'])) {
+    $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
+    $pass1 = !empty($_POST['psw']) ? trim($_POST['psw']) : null;
+    if ($db->userExist($email)){
+        $u = $db->getUser($email);
+        if ($u["password"] === $pass1){
+            // od php 7 lze použít coalescence operátor "?? ''" pro kontrolu nullu
+            $user->login($u["idUsers"] ?? '',$u["name"]?? '', $u["privileges"]?? '',
+                $u["email"]?? '', $u["lastName"] ?? '',$u["created"] ?? '');
+            echo("přihlášen");
+            echo($_SESSION["userName"] . " " . $_SESSION["userPrivileges"]);
+        }else{
+            echo("špatné heslo");
+        }
+    }else{
+        echo("Uživatel se zadaným emailem neexistuje");
+    }
+}
+
+    ?>

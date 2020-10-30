@@ -36,8 +36,6 @@
 
 // REGISTER USER
 if (isset($_POST['submit'])) {
-    echo("postPred");
-    // receive all input values from the form
     $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
     $pass1 = !empty($_POST['psw']) ? trim($_POST['psw']) : null;
     $pass2 = !empty($_POST['psw_repeat']) ? trim($_POST['psw_repeat']) : null;
@@ -50,9 +48,8 @@ if (isset($_POST['submit'])) {
         if ($db->userExist($email)){
             echo("Uzivatel jiz existuje");
         }else{
-            //echo($email . $pass1 . $pass2 . $name . $last_name);
             $db->insertUser($email,$pass1,$name,$last_name);
-            echo("postPo");
+            echo("Uzivatel zaregistrován");
         }
 
     }
