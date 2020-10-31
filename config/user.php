@@ -34,6 +34,9 @@ class USER {
     public function getPrivileges(){
         return $_SESSION['userPrivileges'];
     }
+    public function getUserID(){
+        return $_SESSION['userId'];
+    }
     public function LOGOUT(){
         unset($_SESSION['userName']);
         unset($_SESSION['userPrivileges']);

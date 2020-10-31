@@ -1,0 +1,24 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . "/config/loggedOrRegistrovany.php";
+?>
+<div>
+    <form method="post" action="">
+        <div class="add_tag_form">
+            <h1>Přidání nového tagu</h1>
+            <hr>
+
+            <label for="name"><b>Název</b></label>
+            <input type="text" placeholder="Zadej název tagu" name="name" id="name" required>
+
+            <hr>
+            <button name="submit" type="submit" id="add_tag_btn">Přidat tag</button>
+        </div>
+
+    </form>
+</div>
+<?php
+if (isset($_POST['submit'])) {
+    $name = $_POST['name'] ?? '';
+    $db->insertTag($name);
+    echo "Tag: " . $name . " byl úspěšně vložen";
+}

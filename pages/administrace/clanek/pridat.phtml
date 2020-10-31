@@ -1,0 +1,49 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . "/config/loggedOrRegistrovany.php";
+?>
+<div>
+    <form method="post" action="">
+        <div class="add_article_form">
+            <h1>Přidání nového článku</h1>
+            <hr>
+
+            <label for="title"><b>Titulek</b></label>
+            <input type="text" placeholder="Zadej titulek článku" name="title" id="title" required>
+
+            <label for="description"><b>Popis</b></label>
+            <textarea rows="4" maxlength="255" placeholder="Zadej popis článku" name="description" id="description" required></textarea>
+
+            <label for="content"><b>Obsah</b></label>
+            <textarea rows="30" cols="60" placeholder="Obsah článku" name="content" id="content" required></textarea>
+
+            <div class="tagsCheckboxes">
+            <label for="tags"><b>Tagy</b></label>
+                <?php
+                $tags = $db->getAllTags();
+                foreach ($tags as $row) {
+                    echo  '<input type="checkbox" name="checkbox[]" value="'.$row["idTags"].'" />'; //'.$id.'
+                    echo  '<label for="checkbox">' . $row["name"] . '</label>';
+                }
+                ?>
+            </div>
+
+            <hr>
+            <button name="submit" type="submit" id="add_article_btn">Přidat článek</button>
+        </div>
+
+    </form>
+</div>
+<?php
+    if (isset($_POST['submit'])) {
+        $title = $_POST['title'] ?? '';
+        $description = $_POST['description'] ?? '';
+        $content = $_POST['content'] ?? '';
+        $userid = $user->getUserID();
+        $articleid = $db->insertArticle($title,$description,$content,$userid);
+
+        $checkboxes = isset($_POST['checkbox']) ? $_POST['checkbox'] : array();
+        foreach($checkboxes as $value) {
+            $db->insertArticleTag($value,$articleid);
+        }
+        echo "Článek úspěšně přidán";
+}
