@@ -1,0 +1,32 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
+
+if (isset($_GET['edit'])) {
+    $id = $_GET['edit'];
+    $tag = $db->getTag($id);
+
+}
+
+?>
+    <div>
+        <form method="post" action="">
+            <div class="edit_tag_form">
+                <h1>Úprava tagu</h1>
+                <hr>
+
+                <label for="name"><b>Název</b></label>
+                <input type="text" value="<?php echo $tag["name"];?>" name="name" id="name" required>
+
+                <hr>
+                <button name="submit" type="submit" id="edit_article_btn">Upravit tag</button>
+            </div>
+        </form>
+    </div>
+<?php
+if (isset($_POST['submit'])) {
+    $name = $_POST['name'] ?? '';
+
+    $db->updateTag($name,$id);
+    header("Location: /administrace/tagy/upravit?edit=$id");
+
+}

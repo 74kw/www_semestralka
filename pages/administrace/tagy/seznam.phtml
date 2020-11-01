@@ -1,0 +1,39 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
+
+if (isset($_GET['del'])) {
+    $id = $_GET['del'];
+    $db->deleteArticleTagsByTagID($id);
+    $db->deleteTag($id);
+    header("Location: /administrace/tagy/seznam");
+}
+
+?>
+<div>
+    <table style="table-layout: fixed; width:100%;">
+        <thead>
+        <tr>
+            <th style="width: 5%">Id tagu</th>
+            <th>Název</th>
+            <th colspan="2" style="width: 10%">Akce</th>
+        </tr>
+        </thead>
+
+        <?php
+        $tags = $db->getAllTags();
+        foreach ($tags as $row) { ?>
+            <tr>
+                <td><?php echo $row['idTags']; ?></td>
+                <td><?php echo $row['name']; ?></td>
+                <td>
+                    <a href="/administrace/tagy/upravit?edit=<?php echo $row['idTags']; ?>" class="edit_btn" >
+                        <img alt="upravit" style="width: 50%" src='/images/edit.png'/></a>
+                </td>
+                <td>
+                    <a href="/administrace/tagy/seznam?del=<?php echo $row['idTags']; ?>" class="del_btn">
+                        <img alt="smazat" style="width: 50%" src='/images/del.png'/></a>
+                </td>
+            </tr>
+        <?php } ?>
+    </table>
+</div>

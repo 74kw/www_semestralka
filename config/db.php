@@ -116,5 +116,20 @@ private $conn;
         $stmt= $this->conn->prepare($sql);
         $stmt->execute([$title, $description, $content,$userid,$idArticle]);
     }
+    public function deleteArticleTagsByTagID($idTag){
+        $sql = "DELETE FROM articles_tags WHERE idTags=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idTag]);
+    }
+    public function deleteTag($idTag){
+        $sql = "DELETE FROM tags WHERE idTags=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idTag]);
+    }
+    public function updateTag($name,$idTag){
+        $sql = "UPDATE tags SET name = ? WHERE idTags=?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute([$name,$idTag]);
+    }
 
 }
