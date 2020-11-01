@@ -111,6 +111,10 @@ private $conn;
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$idArticle]);
     }
-
+    public function updateArticle($title, $description,$content,$userid, $idArticle){
+        $sql = "UPDATE articles SET title = ?, description = ?, content = ?,idUsers = ? WHERE idArticles=?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute([$title, $description, $content,$userid,$idArticle]);
+    }
 
 }

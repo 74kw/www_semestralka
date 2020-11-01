@@ -1,0 +1,42 @@
+<?php
+if (isset($_GET['edit'])) {
+    $id = $_GET['edit'];
+    $article = $db->getArticle($id);
+
+}
+
+?>
+<div>
+    <form method="post" action="">
+        <div class="edit_article_form">
+            <h1>Úprava článku</h1>
+            <hr>
+
+            <label for="title"><b>Titulek</b></label>
+            <input type="text" value="<?php echo $article["title"];?>" name="title" id="title" required>
+
+            <label for="description"><b>Popis</b></label>
+            <textarea rows="4" maxlength="255" name="description" id="description" required><?php echo $article["description"];?></textarea>
+
+            <label for="content"><b>Obsah</b></label>
+            <textarea rows="30" cols="60" name="content" id="content" required><?php echo $article["content"];?></textarea>
+
+            <label for="idUsers"><b>Id uživatele</b></label>
+            <input type="number" value="<?php echo $article["idUsers"];?>" name="idUsers" id="idUsers" required>
+
+            <hr>
+            <button name="submit" type="submit" id="edit_article_btn">Upravit článek</button>
+        </div>
+    </form>
+</div>
+<?php
+if (isset($_POST['submit'])) {
+    $title = $_POST['title'] ?? '';
+    $description = $_POST['description'] ?? '';
+    $content = $_POST['content'] ?? '';
+    $userid = $_POST['idUsers'] ?? '';
+
+    $db->updateArticle($title,$description,$content,$userid,$id);
+    header("Location: /administrace/clanek/upravit?edit=$id");
+
+}
