@@ -1,0 +1,36 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
+
+if (isset($_GET['edit'])) {
+    $idTags = $_GET['edit'];
+    $idArticles = $_GET['edit2'];
+}
+
+?>
+<div>
+    <form method="post" action="">
+        <div class="edit_article_tags_form">
+            <h1>Úprava tagů článku</h1>
+            <hr>
+
+            <label for="idTags"><b>Id tagu</b></label>
+            <input type="text" value="<?php echo $idTags;?>" name="idTags" id="idTags" required>
+
+            <label for="idArticles"><b>Id článku</b></label>
+            <input type="text" value="<?php echo $idArticles;?>" name="idArticles" id="idArticles" required>
+
+            <hr>
+            <button name="submit" type="submit" id="edit_article_tags_btn">Upravit tag článku</button>
+        </div>
+    </form>
+</div>
+<?php
+if (isset($_POST['submit'])) {
+    $idTagsNew = $_POST['idTags'] ?? '';
+    $idArticlesNew= $_POST['idArticles'] ?? '';
+
+
+    $db->updateArticleTag($idTagsNew,$idArticlesNew,$idTags,$idArticles);
+    header("Location: /administrace/tagy_clanku/upravit?edit=$idTagsNew&edit2=$idArticlesNew");
+
+}

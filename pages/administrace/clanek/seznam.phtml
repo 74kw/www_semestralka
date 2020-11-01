@@ -3,10 +3,7 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
 
 if (isset($_GET['del'])) {
     $id = $_GET['del'];
-    $db->deleteArticleRating($id);
-    $db->deleteArticleComments($id);
-    $db->deleteArticleTags($id);
-    $db->deleteArticle($id);
+    $db->deleteArticleComplet($id);
     header("Location: /administrace/clanek/seznam");
 }
 

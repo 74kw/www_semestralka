@@ -25,6 +25,11 @@ private $conn;
         $stmt= $this->conn->prepare($sql);
         $stmt->execute([$email, $pswd, 'registrovany',$name,$lastName]);
     }
+    public function insertUserWithPrivileges($email, $pswd,$name,$lastName,$privileges){
+        $sql = "INSERT INTO users (email, password, privileges, name,lastName) VALUES (?,?,?,?,?)";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute([$email, $pswd, $privileges,$name,$lastName]);
+    }
     public function getUser($email){
         $sql = "SELECT * FROM users WHERE email=?";
         $stmt = $this->conn->prepare($sql);
@@ -91,26 +96,24 @@ private $conn;
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $result = $stmt->fetchAll();
     }
-    public function deleteArticle($idArticle){
+    public function deleteArticleComplet($idArticle){
+        $sql = "DELETE FROM comments WHERE idArticles=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+
+        $sql = "DELETE FROM articles_tags WHERE idArticles=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+
+        $sql = "DELETE FROM rating WHERE idArticles=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+
         $sql = "DELETE FROM articles WHERE idArticles=?";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$idArticle]);
     }
-    public function deleteArticleTags($idArticle){
-        $sql = "DELETE FROM articles_tags WHERE idArticles=?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([$idArticle]);
-    }
-    public function deleteArticleComments($idArticle){
-        $sql = "DELETE FROM comments WHERE idArticles=?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([$idArticle]);
-    }
-    public function deleteArticleRating($idArticle){
-        $sql = "DELETE FROM rating WHERE idArticles=?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([$idArticle]);
-    }
+
     public function updateArticle($title, $description,$content,$userid, $idArticle){
         $sql = "UPDATE articles SET title = ?, description = ?, content = ?,idUsers = ? WHERE idArticles=?";
         $stmt= $this->conn->prepare($sql);
@@ -131,5 +134,46 @@ private $conn;
         $stmt= $this->conn->prepare($sql);
         $stmt->execute([$name,$idTag]);
     }
+    public function getAllArticlesTags(){
+        $sql = "SELECT * FROM articles_tags";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        return $result = $stmt->fetchAll();
+    }
+    public function deleteArticleTagsByTagIDAndArticleId($idTag,$idArticle){
+        $sql = "DELETE FROM articles_tags WHERE idTags=? AND idArticles=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idTag,$idArticle]);
+    }
+    public function updateArticleTag($idTagNew,$idArticlesNew,$idTagOld,$idArticlesOld){
+        $sql = "UPDATE articles_tags SET idTags = ?, idArticles = ? WHERE idTags=? AND idArticles = ?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute([$idTagNew,$idArticlesNew,$idTagOld,$idArticlesOld]);
+    }
+    public function getAllUsers(){
+        $sql = "SELECT * FROM users";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        return $result = $stmt->fetchAll();
+    }
+    public function deleteUserComplet($idUsers){
+        $sql = "DELETE FROM comments WHERE idUsers=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idUsers]);
 
+        $sql = "DELETE FROM rating WHERE idUsers=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idUsers]);
+
+        $sql = "DELETE FROM users WHERE idUsers=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idUsers]);
+    }
+    public function updateUser($email,$password,$privileges,$name,$lastName, $idUsers){
+        $sql = "UPDATE users SET email = ?, password = ?, privileges = ?,name = ?,lastName = ?  WHERE idUsers=?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute([$email, $password, $privileges,$name,$lastName,$idUsers]);
+    }
 }

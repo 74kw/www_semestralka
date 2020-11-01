@@ -1,0 +1,40 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
+
+if (isset($_GET['del'])) {
+    $idTags = $_GET['del'];
+    $idArticles = $_GET['del2'];
+
+    $db->deleteArticleTagsByTagIDAndArticleId($idTags,$idArticles);
+    header("Location: /administrace/tagy_clanku/seznam");
+}
+
+?>
+<div>
+<table style="table-layout: fixed; width:50%;">
+    <thead>
+    <tr>
+        <th style="width: 5%">Id Tagu</th>
+        <th style="width: 5%">Id článku</th>
+        <th colspan="2" style="width: 5%">Akce</th>
+    </tr>
+    </thead>
+
+    <?php
+    $articlesTags = $db->getAllArticlesTags();
+    foreach ($articlesTags as $row) { ?>
+        <tr>
+            <td><?php echo $row['idTags']; ?></td>
+            <td><?php echo $row['idArticles']; ?></td>
+            <td>
+                <a href="/administrace/tagy_clanku/upravit?edit=<?php echo $row['idTags']; ?>&edit2=<?php echo $row['idArticles']; ?>" class="edit_btn" >
+                    <img alt="upravit" style="width: 50%" src='/images/edit.png'/></a>
+            </td>
+            <td>
+                <a href="/administrace/tagy_clanku/seznam?del=<?php echo $row['idTags']; ?>&del2=<?php echo $row['idArticles']; ?>" class="del_btn">
+                    <img alt="smazat" style="width: 50%" src='/images/del.png'/></a>
+            </td>
+        </tr>
+    <?php } ?>
+</table>
+</div>

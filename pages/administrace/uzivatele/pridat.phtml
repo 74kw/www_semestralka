@@ -1,0 +1,49 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
+?>
+<div>
+    <form method="post" action="">
+        <div class="add_user_form">
+            <h1>Přidání nového uživatele</h1>
+            <hr>
+            <label for="email"><b>Email</b></label>
+            <input type="email" placeholder="Zadej email" name="email" id="email" required>
+
+            <label for="psw"><b>Heslo</b></label>
+            <input type="password" placeholder="Zadej heslo" name="psw" id="psw" required>
+
+            <label for="name"><b>Jméno</b></label>
+            <input type="text" placeholder="Zadej jméno" name="name" id="name" required>
+
+            <label for="last_name"><b>Příjmení</b></label>
+            <input type="text" placeholder="Zadej příjmení" name="last_name" id="last_name" required>
+
+            <label for="privileges"><b>Oprávnění</b></label>
+            <select name="privileges" id="privileges">
+                <option value="registrovany">Registrovaný</option>
+                <option value="redaktor">Redaktor</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <hr>
+            <button name="submit" type="submit" id="add_user_btn">Přidat uživatele</button>
+        </div>
+
+    </form>
+</div>
+<?php
+    if (isset($_POST['submit'])) {
+        $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
+        $pass1 = !empty($_POST['psw']) ? trim($_POST['psw']) : null;
+        $name = !empty($_POST['name']) ? trim($_POST['name']) : null;
+        $last_name = !empty($_POST['last_name']) ? trim($_POST['last_name']) : null;
+        $privileges = !empty($_POST['privileges']) ? trim($_POST['privileges']) : null;
+
+        if(!$db->userExist($email)){
+            $db->insertUserWithPrivileges($email,$pass1,$name,$last_name,$privileges);
+            echo "Uživatel úspěšně přidán";
+        }else{
+            echo "Uživatel s tímto emailem existuje";
+        }
+
+}

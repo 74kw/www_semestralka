@@ -1,0 +1,69 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
+
+if (isset($_GET['edit'])) {
+    $id = $_GET['edit'];
+    $user = $db->getUserById($id);
+
+}
+
+?>
+<div>
+    <form method="post" action="">
+        <div class="edit_user_form">
+            <h1>Úprava uživatele</h1>
+            <hr>
+
+            <label for="email"><b>Email</b></label>
+            <input type="email" value="<?php echo $user["email"];?>" name="email" id="email" required>
+
+            <label for="psw"><b>Heslo</b></label>
+            <input type="text" value="<?php echo $user["password"];?>" name="psw" id="psw" required>
+
+            <label for="name"><b>Jméno</b></label>
+            <input type="text" value="<?php echo $user["name"];?>" name="name" id="name" required>
+
+            <label for="last_name"><b>Příjmení</b></label>
+            <input type="text" value="<?php echo $user["lastName"];?>" name="last_name" id="last_name" required>
+
+            <label for="privileges"><b>Oprávnění</b></label>
+            <select name="privileges" id="privileges">
+                <?php
+                switch ($user["privileges"]){
+                    case "registrovany":
+                        echo '<option value="registrovany" selected>Registrovaný</option>';
+                        echo '<option value="redaktor">Redaktor</option>';
+                        echo '<option value="admin">Admin</option>';
+                    break;
+                    case "redaktor":
+                        echo '<option value="registrovany">Registrovaný</option>';
+                        echo '<option value="redaktor"  selected>Redaktor</option>';
+                        echo '<option value="admin">Admin</option>';
+                    break;
+                    case "admin":
+                        echo '<option value="registrovany" selected>Registrovaný</option>';
+                        echo '<option value="redaktor">Redaktor</option>';
+                        echo '<option value="admin" selected>Admin</option>';
+                    break;
+                    default:
+                }
+                ?>"
+            </select>
+            <hr>
+            <button name="submit" type="submit" id="edit_user_btn">Upravit uživatele</button>
+        </div>
+    </form>
+</div>
+<?php
+if (isset($_POST['submit'])) {
+
+    $email = $_POST['email'] ?? '';
+    $name = $_POST['name'] ?? '';
+    $password = $_POST['psw'] ?? '';
+    $last_name = $_POST['last_name'] ?? '';
+    $privileges = $_POST['privileges'] ?? '';
+
+    $db->updateUser($email,$password,$privileges,$name,$last_name,$id);
+    header("Location: /administrace/uzivatele/upravit?edit=$id");
+
+}

@@ -1,0 +1,29 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
+?>
+<div>
+    <form method="post" action="">
+        <div class="add_article_tags_form">
+            <h1>Přidání tagu k článku</h1>
+            <hr>
+
+            <label for="idTags"><b>Tag Id</b></label>
+            <input type="text" placeholder="Id tagu" name="idTags" id="idTags" required>
+
+            <label for="idArticles"><b>Článek Id</b></label>
+            <input type="text" placeholder="Id článku" name="idArticles" id="idArticles" required>
+
+            <hr>
+            <button name="submit" type="submit" id="add_article_tags_btn">Přidat tag ke článku</button>
+        </div>
+
+    </form>
+</div>
+<?php
+    if (isset($_POST['submit'])) {
+        $idTags = $_POST['idTags'] ?? '';
+        $idArticles = $_POST['idArticles'] ?? '';
+
+        $db->insertArticleTag($idTags,$idArticles);
+        echo "Tag úspěšně přidán k článku";
+}

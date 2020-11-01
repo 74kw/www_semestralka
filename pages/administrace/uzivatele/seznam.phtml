@@ -1,0 +1,48 @@
+<?php
+include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
+
+if (isset($_GET['del'])) {
+    $id = $_GET['del'];
+    $db->deleteUserComplet($id);
+    header("Location: /administrace/uzivatele/seznam");
+}
+
+?>
+<div>
+<table style="table-layout: fixed; width:100%;">
+    <thead>
+    <tr>
+        <th style="width: 5%">Id uživatele</th>
+        <th>Email</th>
+        <th>Heslo</th>
+        <th>Oprávnění</th>
+        <th>Vytvořen</th>
+        <th>Jméno</th>
+        <th>Příjmení</th>
+        <th colspan="2" style="width: 10%">Akce</th>
+    </tr>
+    </thead>
+
+    <?php
+    $users = $db->getAllUsers();
+    foreach ($users as $row) { ?>
+        <tr>
+            <td><?php echo $row['idUsers']; ?></td>
+            <td><?php echo $row['email']; ?></td>
+            <td><?php echo $row['password']; ?></td>
+            <td><?php echo $row['privileges']; ?></td>
+            <td><?php echo $row['created']; ?></td>
+            <td><?php echo $row['name']; ?></td>
+            <td><?php echo $row['lastName']; ?></td>
+            <td>
+                <a href="/administrace/uzivatele/upravit?edit=<?php echo $row['idUsers']; ?>" class="edit_btn" >
+                    <img alt="upravit" style="width: 50%" src='/images/edit.png'/></a>
+            </td>
+            <td>
+                <a href="/administrace/uzivatele/seznam?del=<?php echo $row['idUsers']; ?>" class="del_btn">
+                    <img alt="smazat" style="width: 50%" src='/images/del.png'/></a>
+            </td>
+        </tr>
+    <?php } ?>
+</table>
+</div>
