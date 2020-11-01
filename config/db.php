@@ -84,6 +84,13 @@ private $conn;
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $result = $stmt->fetch();
     }
+    public function getAllArticles(){
+        $sql = "SELECT * FROM articles";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        return $result = $stmt->fetchAll();
+    }
 
 
 }

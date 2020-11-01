@@ -1,1 +1,38 @@
 <?php
+?>
+<div>
+<table style="table-layout: fixed; width:100%;">
+    <thead>
+    <tr>
+        <th style="width: 5%">Id článku</th>
+        <th>Název</th>
+        <th>Popis</th>
+        <th>Obsah</th>
+        <th>Vytvořen</th>
+        <th style="width: 7%">Id uživatele</th>
+        <th colspan="2" style="width: 10%">Akce</th>
+    </tr>
+    </thead>
+
+    <?php
+    $articles = $db->getAllArticles();
+    foreach ($articles as $row) { ?>
+        <tr>
+            <td><?php echo $row['idArticles']; ?></td>
+            <td><?php echo $row['title']; ?></td>
+            <td><?php echo $row['description']; ?></td>
+            <td style="overflow: hidden; white-space: nowrap;text-overflow: ellipsis; "><?php echo $row['content']; ?></td>
+            <td><?php echo $row['created']; ?></td>
+            <td><?php echo $row['idUsers']; ?></td>
+            <td>
+                <a href="/administrace/clanek/upravit?edit=<?php echo $row['idArticles']; ?>" class="edit_btn" >
+                    <img alt="upravit" style="width: 50%" src='/images/edit.png'/></a>
+            </td>
+            <td>
+                <a href="/administrace/clanek/smazat?del=<?php echo $row['idArticles']; ?>" class="del_btn">
+                    <img alt="smazat" style="width: 50%" src='/images/del.png'/></a>
+            </td>
+        </tr>
+    <?php } ?>
+</table>
+</div>
