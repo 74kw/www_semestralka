@@ -1,0 +1,36 @@
+<?php
+
+$id = $_GET['id'];
+$article = $db->getArticle($id);
+$title = $article["title"]?? '';
+$description = $article["description"]?? '';
+$content = $article["content"]?? '';
+$created = $article["created"]?? '';
+$userID = $article["idUsers"]?? '';
+
+$user = $db->getUserById($userID);
+$userName = $user["name"]?? '';
+$userNameLast = $user["lastName"]?? '';
+//get ids of tags paired to this article
+$tags = $db->getArticleTags($id);
+
+?>
+<div>
+    <h1><?php echo $title?></h1>
+    <div class="metadata">
+        <p>Autor: <?php echo $userName . ' ' . $userNameLast?></p>
+        <p><?php echo $created?></p>
+    </div>
+    <div class="tags">
+        <p>Tagy: <?php
+            foreach ($tags as $row) {
+                //Get name of each tag paired with the article
+                $tag = $db->getTag($row["idTags"]);
+                $tagName = $tag["name"]??'';
+                echo  $tagName . ' ';
+            }?></p>
+    </div>
+    <div class="content">
+        <p><?php echo $content?><p>
+    </div>
+</div>

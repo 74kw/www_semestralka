@@ -32,6 +32,13 @@ private $conn;
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $result = $stmt->fetch();
     }
+    public function getUserById($id){
+        $sql = "SELECT * FROM users WHERE idUsers=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        return $result = $stmt->fetch();
+    }
     public function getAllTags(){
         $sql = "SELECT * FROM tags";
         $stmt = $this->conn->prepare($sql);
@@ -56,17 +63,27 @@ private $conn;
         $last_id = $this->conn->lastInsertId();
         return $last_id;
     }
-    public function getNextArticleID(){
-        $sql = "SELECT AUTO_INCREMENT
-                FROM information_schema.TABLES
-                WHERE TABLE_SCHEMA = \"semestralka\"
-                AND TABLE_NAME = \"tags\"";
-        $stmt= $this->conn->prepare($sql);
+    public function getArticle($id){
+        $sql = "SELECT * FROM articles WHERE idArticles=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $result = $stmt->fetch();
-
-
-
     }
+    public function getArticleTags($idArticle){
+        $sql = "SELECT * FROM articles_tags WHERE idArticles=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        return $result = $stmt->fetchAll();
+    }
+    public function getTag($idTag){
+        $sql = "SELECT * FROM tags WHERE idTags=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idTag]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        return $result = $stmt->fetch();
+    }
+
 
 }
