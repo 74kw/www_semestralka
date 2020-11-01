@@ -1,4 +1,13 @@
 <?php
+if (isset($_GET['del'])) {
+    $id = $_GET['del'];
+    $db->deleteArticleRating($id);
+    $db->deleteArticleComments($id);
+    $db->deleteArticleTags($id);
+    $db->deleteArticle($id);
+    header("Location: /administrace/clanek/seznam");
+}
+
 ?>
 <div>
 <table style="table-layout: fixed; width:100%;">
@@ -29,7 +38,7 @@
                     <img alt="upravit" style="width: 50%" src='/images/edit.png'/></a>
             </td>
             <td>
-                <a href="/administrace/clanek/smazat?del=<?php echo $row['idArticles']; ?>" class="del_btn">
+                <a href="/administrace/clanek/seznam?del=<?php echo $row['idArticles']; ?>" class="del_btn">
                     <img alt="smazat" style="width: 50%" src='/images/del.png'/></a>
             </td>
         </tr>

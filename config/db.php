@@ -91,6 +91,26 @@ private $conn;
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $result = $stmt->fetchAll();
     }
+    public function deleteArticle($idArticle){
+        $sql = "DELETE FROM articles WHERE idArticles=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+    }
+    public function deleteArticleTags($idArticle){
+        $sql = "DELETE FROM articles_tags WHERE idArticles=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+    }
+    public function deleteArticleComments($idArticle){
+        $sql = "DELETE FROM comments WHERE idArticles=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+    }
+    public function deleteArticleRating($idArticle){
+        $sql = "DELETE FROM rating WHERE idArticles=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+    }
 
 
 }
