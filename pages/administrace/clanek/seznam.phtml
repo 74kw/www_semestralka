@@ -43,4 +43,62 @@ if (isset($_GET['del'])) {
         </tr>
     <?php } ?>
 </table>
+    <div>
+        <form action="" method="post" enctype="multipart/form-data">
+        <label for="privileges"><b>Export JSON</b></label>
+        <button name="exportJson" type="submit" id="export_json_btn">Download file</button>
+        <label for="privileges"><b>Import JSON</b></label>
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <button name="importJson" type="submit">Importovat</button>
+        </form>
+    </div>
 </div>
+<?php
+if(isset($_POST['exportJson'])){
+    $json = json_encode($db->getAllArticles(),JSON_UNESCAPED_UNICODE);
+
+    ob_start();
+    echo $json;
+    $htmlStr = ob_get_contents();
+    ob_end_clean();
+    $file_url = 'json/export.json';
+    file_put_contents($file_url, $htmlStr);
+
+    header('Content-Type: application/octet-stream');
+    header("Content-Transfer-Encoding: Binary");
+    header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\"");
+    ob_clean();
+    flush();
+    readfile($file_url);
+    exit();
+} elseif (isset($_POST['importJson'])){
+    $target_dir = "json";
+    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]??'');
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    echo $imageFileType;
+
+    if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"]??'', $target_file)){
+        $records = json_decode(file_get_contents($target_file),JSON_UNESCAPED_UNICODE);
+        if($records != NULL){
+            foreach ($records as $rec){
+                $idArticles = $rec['idArticles'];
+                $title = $rec['title'];
+                $description = $rec['description'];
+                $content = $rec['content'];
+                $idUsers = $rec['idUsers'];
+                $db->insertArticle($title,$description,$content,$idUsers);
+                header("Location: /administrace/clanek/seznam");
+            }
+        } else {
+            $error = "Neplatny typ souboru";
+        }
+    } else {
+        $error = "Nepodařilo se nahrát soubor na server";
+    }
+
+}
+
+
+?>
+
+
