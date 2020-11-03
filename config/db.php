@@ -176,4 +176,49 @@ private $conn;
         $stmt= $this->conn->prepare($sql);
         $stmt->execute([$email, $password, $privileges,$name,$lastName,$idUsers]);
     }
+    public function getArticleRating($idArticle){
+        $sql = "SELECT * FROM rating WHERE idArticles= ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+
+        $count = 0;
+        $doublePrumer = 0;
+        foreach ($result as $row) {
+            $count++;
+            $doublePrumer += $row['value'];
+        }
+        if ($count> 0)
+            return array(round($doublePrumer/$count,1),$count);
+        return array(0,0);
+    }
+    public function getUserAlreadyRate($idArticle,$idUser){
+        $sql = "SELECT * FROM rating WHERE idArticles= ? AND idUsers = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle,$idUser]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch();
+
+        if (isset($result['idUsers'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function insertRating($value,$idArticle,$idUser){
+        $sql = "INSERT INTO rating (value, idUsers, idArticles) VALUES (?,?,?)";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute([$value,$idUser,$idArticle,]);
+    }
+    public function getUserArticleRate($idArticle,$idUser){
+        $sql = "SELECT * FROM rating WHERE idArticles= ? AND idUsers = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle,$idUser]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch();
+
+        return $result['value'];
+    }
+
 }

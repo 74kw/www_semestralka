@@ -1,6 +1,8 @@
 <?php
 
 $id = $_GET['id'];
+/** @var DB $db */
+/** @var USER $user */
 $article = $db->getArticle($id);
 $title = $article["title"]?? '';
 $description = $article["description"]?? '';
@@ -17,6 +19,7 @@ $tags = $db->getArticleTags($id);
 ?>
 <div>
     <h1><?php echo $title?></h1>
+    <hr>
     <div class="metadata">
         <p>Autor: <?php echo $userName . ' ' . $userNameLast?></p>
         <p><?php echo $created?></p>
@@ -30,7 +33,51 @@ $tags = $db->getArticleTags($id);
                 echo  $tagName . ' ';
             }?></p>
     </div>
+    <div class="getRating">
+        <p>Hodnocení článku: <b><?php $pole =$db->getArticleRating($id);
+        if ($pole[0] === 0)
+            echo 'NaN';
+        else{
+        echo $pole[0];}?>/10</b></p>
+        <p class="ratingCount"><i>(Počet uživatelů, kteří ohodnotili článek: <?php echo $pole[1]?>)</i></p>
+    </div>
+    <hr>
     <div class="content">
         <p><?php echo $content?><p>
     </div>
+    <hr>
+    <?php
+    if (isset($_SESSION['userName'])){
+        if (!$db->getUserAlreadyRate($id,$_SESSION['userId']??'')){
+            echo '<div class="setRating">';
+            echo '<form method="post">';
+            echo '<label for="rating">Ohodnoť článek:</label>';
+            echo '<select name="ratingCombo">';
+            echo '<option value="1">1</option>';
+            echo '<option value="2">2</option>';
+            echo '<option value="3">3</option>';
+            echo '<option value="4">4</option>';
+            echo '<option value="5">5</option>';
+            echo '<option value="6">6</option>';
+            echo '<option value="7">7</option>';
+            echo '<option value="8">8</option>';
+            echo '<option value="9">9</option>';
+            echo '<option value="10">10</option>';
+            echo '</select>';
+            echo '<button name="submitRating" type="submit" class="rating_btn">Odeslat hodnocení</button>';
+            echo '</form>';
+            echo '</div>';
+            echo '<hr>';
+        }else{
+            echo '<p><i>Tento článek jsi již hodnotil. Dal jsi mu: ' . $db->getUserArticleRate($id,$_SESSION['userId']) .'/10</i></p>';
+            echo '<hr>';
+        }
+    }
+    ?>
 </div>
+<?php
+if (isset($_POST['submitRating'])){
+    $value = $_POST['ratingCombo'] ?? '';
+    $db->insertRating($value,$id,$_SESSION['userId']);
+    header("Location: /clanek?id=$id");
+}
