@@ -16,6 +16,15 @@ $userNameLast = $user["lastName"]?? '';
 //get ids of tags paired to this article
 $tags = $db->getArticleTags($id);
 
+if (isset($_GET['del'])) {
+    $priv = $_SESSION['userPrivileges'] ??'';
+    if ($priv === 'admin'){
+    $idComment = $_GET['del'] ??'';
+    $db->deleteComment($idComment);
+    header("Location: /clanek?id=$id");
+    }
+}
+
 ?>
 <div>
     <h1><?php echo $title?></h1>
@@ -72,12 +81,43 @@ $tags = $db->getArticleTags($id);
             echo '<p><i>Tento článek jsi již hodnotil. Dal jsi mu: ' . $db->getUserArticleRate($id,$_SESSION['userId']) .'/10</i></p>';
             echo '<hr>';
         }
+        echo '<div class ="commentAdd">';
+        echo '<form method="post">';
+            echo '<label for="commentcontent"><b>Přidat komentář:</b></label>';
+            echo '<textarea rows="4" maxlength="255" placeholder="Text komentáře" name="commentcontent" id="commentcontent" cols="50" required></textarea>';
+            echo '<button name="submitComment" type="submit" id="add_comment_btn">Odeslat komentář</button>';
+        echo '</form>';
+        echo '</div>';
+        echo '<hr>';
     }
     ?>
+    <div class="comments">
+        <h2>Komentáře</h2>
+        <?php
+            $privileges = $_SESSION['userPrivileges'] ??'';
+            $comments = $db->getAllArticleComments($id);
+            $counter = 0;
+            foreach ($comments as $row){
+                $counter++;
+                echo'<div class="comment">';
+                    if ($privileges === 'admin')
+                        echo'<p>#' . $counter . ' ' .'<a href="/clanek?id=' . $id . '&del=' . $row['idComments'] . '" ' . 'class="del_btn">Smazat komentář</a></p>';
+                    else {echo'<p>#' . $counter . '</p>';}
+                    echo'<p>' . $row['name'] . ' ' . $row['lastName'] . '(' . $row['privileges'] . ') ' . $row['created'] . '</p>';
+                    echo'<p class="comment">'. $row['content'] .'</p>';
+                echo'</div>';
+            }
+        ?>
+        <hr>
+    </div>
 </div>
 <?php
 if (isset($_POST['submitRating'])){
     $value = $_POST['ratingCombo'] ?? '';
     $db->insertRating($value,$id,$_SESSION['userId']);
+    header("Location: /clanek?id=$id");
+} elseif (isset($_POST['submitComment'])){
+    $content = $_POST['commentcontent'] ?? '';
+    $db->insertComment($content,$id,$_SESSION['userId']);
     header("Location: /clanek?id=$id");
 }

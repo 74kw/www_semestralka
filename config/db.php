@@ -220,5 +220,37 @@ private $conn;
 
         return $result['value'];
     }
+    public function insertComment($content,$idArticle,$idUser){
+        $sql = "INSERT INTO comments (content, idUsers, idArticles) VALUES (?,?,?)";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute([$content,$idUser,$idArticle,]);
+    }
+    public function getAllArticleComments($idArticle){
+        $sql = "SELECT comments.idComments,comments.content, comments.created, users.name,
+                users.lastName, users.privileges
+                FROM comments
+                INNER JOIN users ON comments.idUsers=users.idUsers WHERE idArticles = ?
+                ORDER BY created ASC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        return $result = $stmt->fetchAll();
+    }
+    public function deleteComment($idComment){
+        $sql = "DELETE FROM comments WHERE idComments = ?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute([$idComment]);
+    }
+    public function getAllArticleByCreated(){
+        $sql = "SELECT articles.idArticles,articles.title, articles.description, articles.content,
+		        articles.created, users.name, users.lastName, users.privileges
+                FROM articles
+                INNER JOIN users ON articles.idUsers=users.idUsers
+                ORDER BY created ASC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        return $result = $stmt->fetchAll();
+    }
 
 }
