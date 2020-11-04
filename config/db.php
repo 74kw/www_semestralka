@@ -246,11 +246,19 @@ private $conn;
 		        articles.created, users.name, users.lastName, users.privileges
                 FROM articles
                 INNER JOIN users ON articles.idUsers=users.idUsers
-                ORDER BY created ASC";
+                ORDER BY created DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $result = $stmt->fetchAll();
     }
+    public function getArticleCommentsCount($idArticle){
+        $sql = "SELECT COUNT(idComments) FROM comments WHERE idArticles = ?";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        return $result = $stmt->fetchColumn();
+    }
+
 
 }

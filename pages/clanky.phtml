@@ -1,4 +1,29 @@
 <?php ?>
 <div>
-    <h1>Nejnovější články</h1>
+    <h1>Články</h1>
+    <div class="thumbnails">
+    <?php
+    $articles = $db->getAllArticleByCreated();
+    foreach ($articles as $article) {
+        echo'<div class="articleThumbnail" style="display: flex">';
+        echo'<div><p>' . $article['created'] . '</p></div>';
+        echo'<div><p><a href="/clanek?id=' . $article['idArticles'] . '">' . $article['title'] . '</a></p><p>' . $article['description']. '</p>';
+        $tags = $db->getArticleTags($article['idArticles']); ?>
+        <p><?php echo 'Tagy: ';
+            foreach ($tags as $row) {
+                //Get name of each tag paired with the article
+                $tag = $db->getTag($row["idTags"]);
+                $tagName = $tag["name"]??'';
+                echo  $tagName . ' ';
+            } echo '</p></div>';
+        $rating = $db->getArticleRating($article['idArticles']);
+        if ($rating[0] === 0)
+            echo '<div><p>NaN/10</p><p><i>Komentářů: </i>' . $db->getArticleCommentsCount($article['idArticles']). '</p></div>';
+        else{echo '<div><p>' . $rating[0] .'/10</p><p><i>Komentářů: </i>' . $db->getArticleCommentsCount($article['idArticles']). '</p></div>';
+        }
+        echo '</div>';
+    }
+
+    ?>
+    </div>
 </div>
