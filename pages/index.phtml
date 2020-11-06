@@ -6,22 +6,22 @@
     $rating = $db->getArticleRating($article['idArticles']);
     ?>
     <div class="articleThumbnail" style="display: flex">
-        <div><p><?php echo $article['created']; ?></p></div>
-        <div><p><a href="/clanek?id=<?php echo $article['idArticles']; ?>"><?php echo $article['title']; ?></a></p>
+        <div class="flexDate"><p><?php echo $article['created']; ?></p></div>
+        <div class="flexClanek"><p id="flexLink"><a href="/clanek?id=<?php echo $article['idArticles']; ?>"><?php echo $article['title']; ?></a></p>
             <p><?php echo $article['description']; ?></p>
             <?php $tags = $db->getArticleTags($article['idArticles']); ?>
-            <p><?php echo 'Tagy: ';
+            <p><?php echo 'Tagy: <b>';
                 foreach ($tags as $row) {
                     //Get name of each tag paired with the article
                     $tag = $db->getTag($row["idTags"]);
                     $tagName = $tag["name"]??'';
                     echo  $tagName . ' ';
-                }?></p></div>
-        <div><p><?php if ($rating[0] === 0)
+                }?></b></p></div>
+        <div class="flexRating"><p><b><?php if ($rating[0] === 0)
                 echo 'NaN';
                 else{
-                echo $rating[0];}?>/10</p>
-            <p><i>Komentářů: </i><?php echo $db->getArticleCommentsCount($article['idArticles'])?></p></div>
+                    echo $rating[0];}?>/10</b></p>
+            <p><i>Komentářů: </i><b><?php echo $db->getArticleCommentsCount($article['idArticles'])?></b></p></div>
     </div>
 </div>
 

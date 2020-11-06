@@ -1,0 +1,176 @@
+/* BASIC STYLES START */
+h1{
+    font-size: 200%;
+    color: white;
+    margin: 0;
+    padding: 1%;
+    background-color:  #9B2335;
+    text-align: center;
+}
+
+h2,h3{
+    color:#9B2335;
+    text-align: center;
+}
+body{
+    background-color: rgba(155,35,53,0.1);
+
+}
+nav {
+    text-align: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color:  #222;
+
+}
+
+li {
+    float: left;
+}
+
+nav a {
+    margin: auto;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+a:link{
+    color: lightskyblue;
+}
+a:visited{
+    color: lightskyblue;
+}
+
+footer a:link {
+    color: lightskyblue;
+}
+footer a:visited {
+    color: lightskyblue;
+}
+
+nav a:hover {
+    background-color: white;
+    color:#9B2335;
+
+}
+footer{
+    color:white;
+    background-color:  #9B2335;
+    padding: 1%;
+    text-align: center;
+}
+.kontakt{
+    text-align: center;
+    color: #9B2335;
+}
+/* BASIC STYLES END */
+/* ARTICLE THUMBNAIL START */
+.articleThumbnail:hover{
+    background-color: #444;
+}
+
+.articleThumbnail {
+    width: 100%;
+    display: flex;
+    background-color: #222;
+    border-radius: 10px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.articleThumbnail > div {
+    color: white;
+    text-align: center;
+    width: 100%;
+    border-radius: 20px;
+    background-color:#9B2335 ;
+    margin: 2%;
+    padding: 3%;
+}
+.flexDate{
+    font-weight: bold;
+    flex-basis: 20%;
+}
+.flexClanek{
+    flex-basis: 100%;
+}
+.flexRating{
+    flex-basis: 20%;
+}
+#flexLink{
+    font-weight: bold;
+    font-size: 20px;
+}
+/* ARTICLE THUMBNAIL END */
+/* FORM START */
+.form p{
+    color:#9B2335 ;
+    text-align: center;
+}
+.form{
+    color:#9B2335 ;
+    text-align: center;
+}
+.form a{
+    color:darkblue ;
+}
+form input[type=text], select, input[type=password], input[type=email]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+form label{
+    text-align: center;
+}
+form input[type=text]:focus, select:focus, input[type=password]:focus, input[type=email]:focus{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 5px solid #9B2335;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+form input[type=submit],button[type=submit] {
+    width: 100%;
+    background-color: #222;
+    color: lightskyblue;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+
+}
+input[type=submit]:hover,button[type=submit]:hover {
+    background-color: #9B2335;
+    color: white;
+    font-weight: bold;
+}
+/* FORM END */
+/* SCROLL BAR START */
+::-webkit-scrollbar {
+    width: 20px;/* width */
+}
+::-webkit-scrollbar-track {
+    background: #222;/* Track */
+}
+::-webkit-scrollbar-thumb {
+    background: #9B2335;/* Handle */
+}
+::-webkit-scrollbar-thumb:hover {
+    background: lightskyblue;/* Handle on hover */
+}
+/* SCROLL BAR END */
+/* SCROLL ARTICLE START */
+
+/* SCROLL ARTICLE  END */
