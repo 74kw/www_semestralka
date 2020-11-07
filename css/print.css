@@ -1,0 +1,16 @@
+header{
+    display: none;
+}
+
+nav{
+    display: none;
+}
+.comments{
+    display: none;
+}
+.form{
+    display: none;
+}
+h1,p{
+    color: #222222;
+}
