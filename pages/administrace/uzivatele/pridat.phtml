@@ -3,7 +3,7 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
 ?>
 <div>
     <form method="post" action="">
-        <div class="add_user_form">
+        <div class="form">
             <h1>Přidání nového uživatele</h1>
             <hr>
             <label for="email"><b>Email</b></label>
@@ -41,9 +41,9 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
 
         if(!$db->userExist($email)){
             $db->insertUserWithPrivileges($email,$pass1,$name,$last_name,$privileges);
-            echo "Uživatel úspěšně přidán";
+            echo "<p class='info'> Uživatel úspěšně přidán</p>";
         }else{
-            echo "Uživatel s tímto emailem existuje";
+            echo "<p class='alert'>Uživatel s tímto emailem existuje";
         }
 
 }

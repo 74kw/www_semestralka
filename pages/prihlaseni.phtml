@@ -40,10 +40,10 @@ if (isset($_POST['submit'])) {
             echo($_SESSION["userName"] . " " . $_SESSION["userPrivileges"]);
             header('Location: /');
         }else{
-            echo("špatné heslo");
+            echo("<p class='alert'>špatné heslo</p>");
         }
     }else{
-        echo("Uživatel se zadaným emailem neexistuje");
+        echo("<p class='alert'>Uživatel se zadaným emailem neexistuje</p>");
     }
 }
 

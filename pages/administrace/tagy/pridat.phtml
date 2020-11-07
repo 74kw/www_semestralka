@@ -3,7 +3,7 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/loggedOrRegistrovany.php";
 ?>
 <div>
     <form method="post" action="">
-        <div class="add_tag_form">
+        <div class="form">
             <h1>Přidání nového tagu</h1>
             <hr>
 
@@ -20,5 +20,5 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/loggedOrRegistrovany.php";
 if (isset($_POST['submit'])) {
     $name = $_POST['name'] ?? '';
     $db->insertTag($name);
-    echo "Tag: " . $name . " byl úspěšně vložen";
+    echo "<p class='info'>Tag: " . $name . " byl úspěšně vložen</p>";
 }

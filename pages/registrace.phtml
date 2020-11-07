@@ -43,13 +43,13 @@ if (isset($_POST['submit'])) {
     $last_name = !empty($_POST['last_name']) ? trim($_POST['last_name']) : null;
     //var_dump($db->userExist($email)); //test
     if ($pass1 != $pass2){
-        echo("hesla se neshodují");
+        echo("<p class='alert'>hesla se neshodují</p>");
     }else{
         if ($db->userExist($email)){
-            echo("Uzivatel jiz existuje");
+            echo("<p class='alert'>Uzivatel jiz existuje</p>");
         }else{
             $db->insertUser($email,$pass1,$name,$last_name);
-            echo("Uzivatel zaregistrován");
+            echo("<p class='info'><b>Uzivatel zaregistrován</b></p>");
         }
 
     }

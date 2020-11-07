@@ -3,7 +3,7 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/loggedOrRegistrovany.php";
 ?>
 <div>
     <form method="post" action="">
-        <div class="add_article_form">
+        <div class="form">
             <h1>Přidání nového článku</h1>
             <hr>
 
@@ -45,5 +45,5 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/loggedOrRegistrovany.php";
         foreach($checkboxes as $value) {
             $db->insertArticleTag($value,$articleid);
         }
-        echo "Článek úspěšně přidán";
+        echo "<p class='info'>Článek úspěšně přidán</p>";
 }

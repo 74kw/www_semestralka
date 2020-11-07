@@ -32,11 +32,14 @@ li {
 
 nav a {
     margin: auto;
-    display: inline-block;
+    display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+}
+#nav a{
+    display: inline-block;
 }
 a:link{
     color: lightskyblue;
@@ -118,7 +121,7 @@ footer{
 .form a{
     color:darkblue ;
 }
-form input[type=text], select, input[type=password], input[type=email]{
+form input[type=text], select, input[type=password], input[type=email],textarea{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -126,11 +129,12 @@ form input[type=text], select, input[type=password], input[type=email]{
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    resize:none;
 }
 form label{
     text-align: center;
 }
-form input[type=text]:focus, select:focus, input[type=password]:focus, input[type=email]:focus{
+form input[type=text]:focus, select:focus, input[type=password]:focus, input[type=email]:focus,textarea:focus{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -139,7 +143,7 @@ form input[type=text]:focus, select:focus, input[type=password]:focus, input[typ
     border-radius: 4px;
     box-sizing: border-box;
 }
-form input[type=submit],button[type=submit] {
+form input[type=submit],button[type=submit],input[type=file] {
     width: 100%;
     background-color: #222;
     color: lightskyblue;
@@ -151,7 +155,7 @@ form input[type=submit],button[type=submit] {
     font-weight: bold;
 
 }
-input[type=submit]:hover,button[type=submit]:hover {
+input[type=submit]:hover,button[type=submit]:hover,input[type=file]:hover {
     background-color: #9B2335;
     color: white;
     font-weight: bold;
@@ -171,6 +175,84 @@ input[type=submit]:hover,button[type=submit]:hover {
     background: lightskyblue;/* Handle on hover */
 }
 /* SCROLL BAR END */
-/* SCROLL ARTICLE START */
+/* ARTICLE START */
+.metadata,.tags,.getRating{
+    text-align: center;
+    color: #9B2335;
+    font-size: 20px;
+}
+.content{
+    color: white;
+    background-color: #9B2335;
+    text-align: center;
+    padding: 2%;
+    margin: 1%;
+    border-radius: 50px;
+    font-size: 20px;
+}
+/* ARTICLE  END */
+/* COMMENT START */
+.comment{
+    margin-top: 1%;
+    background-color: #9B2335;
+    border-radius: 15px;
+    padding: 1%;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+.commentContent{
+    background-color: #222;
+    border-radius: 15px;
+    padding: 2%;
+    color: lightskyblue;
+}
+.text{
+    color: white;
+    font-weight: normal;
+}
+/* COMMENT END */
+/* TABLE START */
+table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
 
-/* SCROLL ARTICLE  END */
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    overflow: hidden; white-space: nowrap;text-overflow: ellipsis;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #9B2335;
+    color: white;
+}
+/* TABLE END */
+.alert{
+    font-weight: bold;
+    font-size: 20px;
+    color: red;
+    text-align: center;
+    animation: blinker 2s linear infinite;
+}
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+.info{
+    text-align: center;
+    color: #9B2335;
+    font-size: 20px;
+    font-weight: bold;
+
+}

@@ -26,21 +26,21 @@ if (isset($_GET['del'])) {
 }
 
 ?>
-<div>
+<div class="article" >
     <h1><?php echo $title?></h1>
     <hr>
     <div class="metadata">
-        <p>Autor: <?php echo $userName . ' ' . $userNameLast?></p>
+        <p>Autor:<b> <?php echo $userName . ' ' . $userNameLast?></b></p>
         <p><?php echo $created?></p>
     </div>
     <div class="tags">
-        <p>Tagy: <?php
+        <p>Tagy: <b><?php
             foreach ($tags as $row) {
                 //Get name of each tag paired with the article
                 $tag = $db->getTag($row["idTags"]);
                 $tagName = $tag["name"]??'';
                 echo  $tagName . ' ';
-            }?></p>
+            }?></b></p>
     </div>
     <div class="getRating">
         <p>Hodnocení článku: <b><?php $pole =$db->getArticleRating($id);
@@ -48,7 +48,7 @@ if (isset($_GET['del'])) {
             echo 'NaN';
         else{
         echo $pole[0];}?>/10</b></p>
-        <p class="ratingCount"><i>(Počet uživatelů, kteří ohodnotili článek: <?php echo $pole[1]?>)</i></p>
+        <p class="ratingCount"><i>(Počet uživatelů, kteří ohodnotili článek:<b> <?php echo $pole[1]?></b>)</i></p>
     </div>
     <hr>
     <div class="content">
@@ -58,9 +58,9 @@ if (isset($_GET['del'])) {
     <?php
     if (isset($_SESSION['userName'])){
         if (!$db->getUserAlreadyRate($id,$_SESSION['userId']??'')){
-            echo '<div class="setRating">';
+            echo '<div class="form">';
             echo '<form method="post">';
-            echo '<label for="rating">Ohodnoť článek:</label>';
+            echo '<label for="rating"><b>Ohodnoť článek:</b></label>';
             echo '<select name="ratingCombo">';
             echo '<option value="1">1</option>';
             echo '<option value="2">2</option>';
@@ -81,7 +81,7 @@ if (isset($_GET['del'])) {
             echo '<p><i>Tento článek jsi již hodnotil. Dal jsi mu: ' . $db->getUserArticleRate($id,$_SESSION['userId']) .'/10</i></p>';
             echo '<hr>';
         }
-        echo '<div class ="commentAdd">';
+        echo '<div class ="form">';
         echo '<form method="post">';
             echo '<label for="commentcontent"><b>Přidat komentář:</b></label>';
             echo '<textarea rows="4" maxlength="255" placeholder="Text komentáře" name="commentcontent" id="commentcontent" cols="50" required></textarea>';
@@ -91,6 +91,7 @@ if (isset($_GET['del'])) {
         echo '<hr>';
     }
     ?>
+    </div>
     <div class="comments">
         <h2>Komentáře</h2>
         <?php
@@ -103,14 +104,14 @@ if (isset($_GET['del'])) {
                     if ($privileges === 'admin')
                         echo'<p>#' . $counter . ' ' .'<a href="/clanek?id=' . $id . '&del=' . $row['idComments'] . '" ' . 'class="del_btn">Smazat komentář</a></p>';
                     else {echo'<p>#' . $counter . '</p>';}
-                    echo'<p>' . $row['name'] . ' ' . $row['lastName'] . '(' . $row['privileges'] . ') ' . $row['created'] . '</p>';
-                    echo'<p class="comment">'. $row['content'] .'</p>';
+                    echo'<div class="commentContent"><p>' . $row['name'] . ' ' . $row['lastName'] . '(' . $row['privileges'] . ') ' . $row['created'] . '</p>';
+                    echo'<p class="text">'. $row['content'] .'</div></p>';
                 echo'</div>';
             }
         ?>
         <hr>
     </div>
-</div>
+
 <?php
 if (isset($_POST['submitRating'])){
     $value = $_POST['ratingCombo'] ?? '';

@@ -3,7 +3,7 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
 ?>
 <div>
     <form method="post" action="">
-        <div class="add_article_tags_form">
+        <div class="form">
             <h1>Přidání tagu k článku</h1>
             <hr>
 
@@ -25,5 +25,5 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/onlyadmin.php";
         $idArticles = $_POST['idArticles'] ?? '';
 
         $db->insertArticleTag($idTags,$idArticles);
-        echo "Tag úspěšně přidán k článku";
+        echo "<p class='info'>Tag úspěšně přidán k článku</p>";
 }
