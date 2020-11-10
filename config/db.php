@@ -193,6 +193,25 @@ private $conn;
             return array(round($doublePrumer/$count,1),$count);
         return array(0,0);
     }
+    public function getArticleRatingV2($idArticle){
+        $sql = "SELECT SUM(value) as value FROM rating WHERE idArticles= ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch();
+        $sum = $result['value'];
+
+        $sql = "SELECT COUNT(value) as value FROM rating WHERE idArticles= ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idArticle]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch();
+        $count = $result['value'];
+
+        if ($count> 0)
+            return array(round($sum/$count,1),$count);
+        return array($count,$count);
+    }
     public function getUserAlreadyRate($idArticle,$idUser){
         $sql = "SELECT * FROM rating WHERE idArticles= ? AND idUsers = ?";
         $stmt = $this->conn->prepare($sql);

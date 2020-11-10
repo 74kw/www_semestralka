@@ -14,7 +14,8 @@ h2,h3{
 }
 
 body{
-    background-color: rgba(155,35,53,0.1);
+    width: 50%;
+    margin: auto;
 
 }
 
@@ -32,6 +33,11 @@ li {
     float: left;
 }
 
+.adminMenu{
+    width: 30%;
+    margin: auto;
+}
+
 nav a {
     margin: auto;
     display: block;
@@ -42,6 +48,7 @@ nav a {
 }
 #nav a{
     display: inline-block;
+
 }
 a:link{
     color: lightskyblue;
@@ -79,29 +86,30 @@ footer{
 }
 
 .articleThumbnail {
-    width: 100%;
+    width: 10%;
     display: flex;
     background-color: #222;
     border-radius: 10px;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin: auto;
+    /*margin-top: 2%;
+    margin-bottom: 2%;*/
 }
 
 .articleThumbnail > div {
     color: white;
     text-align: center;
-    width: 100%;
+    width: 20%;
     border-radius: 20px;
     background-color:#9B2335 ;
-    margin: 2%;
-    padding: 3%;
+    /*margin: 2%;
+    padding: 3%;*/
 }
 .flexDate{
     font-weight: bold;
     flex-basis: 20%;
 }
 .flexClanek{
-    flex-basis: 100%;
+    flex-basis: 50%;
 }
 .flexRating{
     flex-basis: 20%;
@@ -116,7 +124,14 @@ footer{
     color:#9B2335 ;
     text-align: center;
 }
+.thumbnails{
+    width: 70%;
+    margin: auto;
+}
+
 .form{
+    width: 80%;
+    margin: auto;
     color:#9B2335 ;
     text-align: center;
 }
@@ -124,7 +139,7 @@ footer{
     color:darkblue ;
 }
 form input[type=text], select, input[type=password], input[type=email],textarea{
-    width: 100%;
+    width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -146,7 +161,7 @@ form input[type=text]:focus, select:focus, input[type=password]:focus, input[typ
     box-sizing: border-box;
 }
 form input[type=submit],button[type=submit],input[type=file] {
-    width: 100%;
+    width: 50%;
     background-color: #222;
     color: lightskyblue;
     padding: 14px 20px;
@@ -183,30 +198,35 @@ input[type=submit]:hover,button[type=submit]:hover,input[type=file]:hover {
     color: #9B2335;
     font-size: 20px;
 }
+.article{
+    margin: auto;
+}
 .content{
     color: white;
     background-color: #9B2335;
     text-align: center;
     padding: 2%;
-    margin: 1%;
     border-radius: 50px;
     font-size: 20px;
+
 }
 /* ARTICLE  END */
 /* COMMENT START */
 .comment{
+    width: 70%;
+    margin: auto;
     margin-top: 1%;
     background-color: #9B2335;
-    border-radius: 15px;
-    padding: 1%;
+    border-radius: 10px;
+    padding: 1px;
     color: white;
     font-weight: bold;
     text-align: center;
 }
 .commentContent{
     background-color: #222;
-    border-radius: 15px;
-    padding: 2%;
+    border-radius: 10px;
+    padding: 2px;
     color: lightskyblue;
 }
 .text{

@@ -9,9 +9,10 @@ if (isset($_GET['edit'])) {
 
 ?>
 <div>
+    <h1>Úprava článku</h1>
     <form method="post" action="">
         <div class="form">
-            <h1>Úprava článku</h1>
+
             <hr>
 
             <label for="title"><b>Titulek</b></label>
@@ -26,6 +27,25 @@ if (isset($_GET['edit'])) {
             <label for="idUsers"><b>Id uživatele</b></label>
             <input type="number" value="<?php echo $article["idUsers"];?>" name="idUsers" id="idUsers" required>
 
+            <label for="checkbox"><b>Tagy</b></label>
+            <?php
+            $tags = $db->getAllTags();
+            $articleTags = $db->getArticleTags($id);
+            foreach ($tags as $row) {
+                $isChecked=0;
+                foreach ($articleTags as $articleTag)
+                    if ($row["idTags"] === $articleTag["idTags"]){
+                        echo  '<input type="checkbox" name="checkbox[]" value="'.$row["idTags"].'" checked/>'; //'.$id.'
+                        echo  '<label for="checkbox">' . $row["name"] . '</label>';
+                        $isChecked =1;
+                    }
+                if ($isChecked ===0){
+                    echo  '<input type="checkbox" name="checkbox[]" value="'.$row["idTags"].'"/>'; //'.$id.'
+                    echo  '<label for="checkbox">' . $row["name"] . '</label>';
+                }
+            }
+            ?>
+
             <hr>
             <button name="submit" type="submit" id="edit_article_btn">Upravit článek</button>
         </div>
@@ -39,6 +59,15 @@ if (isset($_POST['submit'])) {
     $userid = $_POST['idUsers'] ?? '';
 
     $db->updateArticle($title,$description,$content,$userid,$id);
+    $articleTags = $db->getArticleTags($id);
+    foreach ($articleTags as $articleTag){
+        $db->deleteArticleTagsByTagID($articleTag["idTags"]);
+    }
+    $checkboxes = isset($_POST['checkbox']) ? $_POST['checkbox'] : array();
+    foreach($checkboxes as $value) {
+        $db->insertArticleTag($value,$id);
+    }
+
     header("Location: /administrace/clanek/upravit?edit=$id");
 
 }

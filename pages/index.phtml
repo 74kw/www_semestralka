@@ -5,6 +5,7 @@
     $article = $db->getAllArticleByCreated()[0];
     $rating = $db->getArticleRating($article['idArticles']);
     ?>
+    <div class="thumbnails">
     <div class="articleThumbnail" style="display: flex">
         <div class="flexDate"><p><?php echo $article['created']; ?></p></div>
         <div class="flexClanek"><p id="flexLink"><a href="/clanek?id=<?php echo $article['idArticles']; ?>"><?php echo $article['title']; ?></a></p>
@@ -18,10 +19,11 @@
                     echo  $tagName . ' ';
                 }?></b></p></div>
         <div class="flexRating"><p><b><?php if ($rating[0] === 0)
-                echo 'NaN';
+                echo 'Článek zatím nebyl hodnocen';
                 else{
-                    echo $rating[0];}?>/10</b></p>
+                    echo $rating[0] . '/10';}?></b></p>
             <p><i>Komentářů: </i><b><?php echo $db->getArticleCommentsCount($article['idArticles'])?></b></p></div>
+    </div>
     </div>
 </div>
 

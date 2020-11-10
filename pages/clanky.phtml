@@ -18,7 +18,7 @@
             } echo '</b></p></div>';
         $rating = $db->getArticleRating($article['idArticles']);
         if ($rating[0] === 0)
-            echo '<div class="flexRating"><p><b>NaN/10</b></p><p><i>Komentářů: </i><b>' . $db->getArticleCommentsCount($article['idArticles']). '</b></p></div>';
+            echo '<div class="flexRating"><p><b>Článek zatím nebyl hodnocen</b></p><p><i>Komentářů: </i><b>' . $db->getArticleCommentsCount($article['idArticles']). '</b></p></div>';
         else{echo '<div class="flexRating"><p><b>' . $rating[0] .'/10</b></p><p><i>Komentářů: </i><b>' . $db->getArticleCommentsCount($article['idArticles']). '</b></p></div>';
         }
         echo '</div>';

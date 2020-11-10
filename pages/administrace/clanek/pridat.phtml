@@ -2,9 +2,10 @@
 include $_SERVER['DOCUMENT_ROOT'] . "/config/loggedOrRegistrovany.php";
 ?>
 <div>
+    <h1>Přidání nového článku</h1>
     <form method="post" action="">
         <div class="form">
-            <h1>Přidání nového článku</h1>
+
             <hr>
 
             <label for="title"><b>Titulek</b></label>
@@ -46,4 +47,5 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/loggedOrRegistrovany.php";
             $db->insertArticleTag($value,$articleid);
         }
         echo "<p class='info'>Článek úspěšně přidán</p>";
+        header("Location: /clanek?id=$articleid");
 }

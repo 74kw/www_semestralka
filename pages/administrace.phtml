@@ -1,10 +1,11 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'] . "/config/loggedOrRegistrovany.php";
 ?>
-
+<h1>Administrace</h1>
 <div class="adminMenu">
     <nav>
-    <h1>Administrace</h1>
+
+
     <h2>Články</h2>
     <a href="administrace/clanek/pridat" class="button">Přidat článek</a>
     <?php if ($_SESSION['userPrivileges'] === 'admin'){echo'<a href="administrace/clanek/seznam" class="button">Seznam článků</a>';}?>
@@ -17,5 +18,6 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/loggedOrRegistrovany.php";
     <h2>Uživatelé</h2>
     <a href="administrace/uzivatele/pridat" class="button">Přidat uživatele</a>
     <a href="administrace/uzivatele/seznam" class="button">Seznam uživatelů</a>';}?>
+
     </nav>
 </div>

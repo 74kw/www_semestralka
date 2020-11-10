@@ -43,11 +43,11 @@ if (isset($_GET['del'])) {
             }?></b></p>
     </div>
     <div class="getRating">
-        <p>Hodnocení článku: <b><?php $pole =$db->getArticleRating($id);
+        <p>Hodnocení článku: <b><?php $pole =$db->getArticleRatingV2($id);
         if ($pole[0] === 0)
-            echo 'NaN';
+            echo 'Článek zatím nebyl hodnocen';
         else{
-        echo $pole[0];}?>/10</b></p>
+        echo $pole[0] . '/10';}?></b></p>
         <p class="ratingCount"><i>(Počet uživatelů, kteří ohodnotili článek:<b> <?php echo $pole[1]?></b>)</i></p>
     </div>
     <hr>
