@@ -271,6 +271,18 @@ private $conn;
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $result = $stmt->fetchAll();
     }
+    public function getAllArticleByCreatedAndTag($idTag){
+        $sql = "SELECT articles_tags.idTags, articles.idArticles, articles.title,
+                articles.description,articles.content,articles.created, articles.idUsers
+                FROM articles_tags
+                INNER JOIN articles ON articles_tags.idArticles = articles.idArticles
+                WHERE articles_tags.idTags = ?
+                ORDER BY created DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idTag]);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        return $result = $stmt->fetchAll();
+    }
     public function getArticleCommentsCount($idArticle){
         $sql = "SELECT COUNT(idComments) FROM comments WHERE idArticles = ?";
         $stmt= $this->conn->prepare($sql);

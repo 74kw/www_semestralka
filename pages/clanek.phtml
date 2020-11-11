@@ -39,7 +39,7 @@ if (isset($_GET['del'])) {
                 //Get name of each tag paired with the article
                 $tag = $db->getTag($row["idTags"]);
                 $tagName = $tag["name"]??'';
-                echo  $tagName . ' ';
+                echo  '<a href="/clanky?idTag=' . $row["idTags"] .'">' . $tagName . '</a> ';
             }?></b></p>
     </div>
     <div class="getRating">

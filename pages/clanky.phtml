@@ -1,9 +1,15 @@
-<?php ?>
+
 <div>
     <h1>Články</h1>
     <div class="thumbnails">
     <?php
-    $articles = $db->getAllArticleByCreated();
+    if (isset($_GET['idTag'])){
+        $idTag = $_GET['idTag'];
+        $articles = $db->getAllArticleByCreatedAndTag($idTag);
+    }else{
+        $articles = $db->getAllArticleByCreated();
+    }
+
     foreach ($articles as $article) {
         echo'<div class="articleThumbnail" style="display: flex">';
         echo'<div class="flexDate"<p>' . $article['created'] . '</p></div>';
@@ -14,7 +20,7 @@
                 //Get name of each tag paired with the article
                 $tag = $db->getTag($row["idTags"]);
                 $tagName = $tag["name"]??'';
-                echo  $tagName . ' ';
+                echo  '<a href="/clanky?idTag=' . $row["idTags"] .'">' . $tagName . '</a> ';
             } echo '</b></p></div>';
         $rating = $db->getArticleRating($article['idArticles']);
         if ($rating[0] === 0)
