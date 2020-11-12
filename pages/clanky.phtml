@@ -5,7 +5,7 @@
     <?php
     if (isset($_GET['idTag'])){
         $idTag = $_GET['idTag'];
-        $articles = $db->getAllArticleByCreatedAndTag($idTag);
+        $articles = $db->getAllArticleByTagSortedByCreated($idTag);
     }else{
         $articles = $db->getAllArticleByCreated();
     }

@@ -271,7 +271,7 @@ private $conn;
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $result = $stmt->fetchAll();
     }
-    public function getAllArticleByCreatedAndTag($idTag){
+    public function getAllArticleByTagSortedByCreated($idTag){
         $sql = "SELECT articles_tags.idTags, articles.idArticles, articles.title,
                 articles.description,articles.content,articles.created, articles.idUsers
                 FROM articles_tags
