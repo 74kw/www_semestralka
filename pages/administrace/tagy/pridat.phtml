@@ -18,7 +18,7 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/loggedOrRegistrovany.php";
 </div>
 <?php
 if (isset($_POST['submit'])) {
-    $name = $_POST['name'] ?? '';
+    $name = htmlspecialchars($_POST['name'] ?? '');
     $db->insertTag($name);
     echo "<p class='info'>Tag: " . $name . " byl úspěšně vložen</p>";
 }

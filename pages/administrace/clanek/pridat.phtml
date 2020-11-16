@@ -36,9 +36,9 @@ include $_SERVER['DOCUMENT_ROOT'] . "/config/loggedOrRegistrovany.php";
 </div>
 <?php
     if (isset($_POST['submit'])) {
-        $title = $_POST['title'] ?? '';
-        $description = $_POST['description'] ?? '';
-        $content = $_POST['content'] ?? '';
+        $title = htmlspecialchars($_POST['title'] ?? '');
+        $description = htmlspecialchars($_POST['description'] ?? '');
+        $content = htmlspecialchars($_POST['content'] ?? '');
         $userid = $user->getUserID();
         $articleid = $db->insertArticle($title,$description,$content,$userid);
 

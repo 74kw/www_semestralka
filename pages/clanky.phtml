@@ -4,7 +4,7 @@
     <div class="thumbnails">
     <?php
     if (isset($_GET['idTag'])){
-        $idTag = $_GET['idTag'];
+        $idTag = htmlspecialchars($_GET['idTag']);
         $articles = $db->getAllArticleByTagSortedByCreated($idTag);
     }else{
         $articles = $db->getAllArticleByCreated();

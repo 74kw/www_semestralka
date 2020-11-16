@@ -29,8 +29,8 @@
 
 // login
 if (isset($_POST['submit'])) {
-    $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
-    $pass1 = !empty($_POST['psw']) ? trim($_POST['psw']) : null;
+    $email = htmlspecialchars(!empty($_POST['email']) ? trim($_POST['email']) : null);
+    $pass1 = htmlspecialchars(!empty($_POST['psw']) ? trim($_POST['psw']) : null);
     if ($db->userExist($email)){
         $u = $db->getUser($email);
         if ($u["password"] === $pass1){
